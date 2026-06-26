@@ -19,16 +19,20 @@ jobs:
           $Source = "${{ github.workspace }}"
           $Destination = "C:\Website\COUNT"
 
-          Write-Host "Deploying Website..."
+          Write-Host "Source: $Source"
+          Write-Host "Destination: $Destination"
 
-          robocopy `
-            $Source `
-            $Destination `
-            /MIR `
-            /XD ".git" ".github"
+          robocopy $Source $Destination /MIR /XD ".git" ".github"
 
-          if ($LASTEXITCODE -gt 7) {
-            throw "Deployment failed."
+          $rc = $LASTEXITCODE
+
+          Write-Host "Robocopy Exit Code = $rc"
+
+          # Robocopy exit codes 0-7 are success
+          if ($rc -ge 8) {
+              throw "Robocopy failed with exit code $rc"
           }
 
-          Write-Host "Deployment Successful!"
+          Write-Host "Deployment Successful."
+
+          exit 0
