@@ -17,7 +17,7 @@ jobs:
         shell: powershell
         run: |
           $Source = "${{ github.workspace }}"
-          $Destination = "C:\Website\COUNT-main"
+          $Destination = "C:\Website\COUNT"
 
           Write-Host "Deploying Website..."
 
