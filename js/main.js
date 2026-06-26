@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
 msgBox.style.color = "#ffffff";
 msgBox.innerText = "Sending message...";
 
-fetch("http://localhost:5107/api/contact", {
+fetch("http://172.16.3.12:5000/api/contact", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"

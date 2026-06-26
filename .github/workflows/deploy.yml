@@ -1,0 +1,34 @@
+name: Deploy Website to IIS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy Website
+        shell: powershell
+        run: |
+          $Source = "${{ github.workspace }}"
+          $Destination = "C:\Website\COUNT-main"
+
+          Write-Host "Deploying Website..."
+
+          robocopy `
+            $Source `
+            $Destination `
+            /MIR `
+            /XD ".git" ".github"
+
+          if ($LASTEXITCODE -gt 7) {
+            throw "Deployment failed."
+          }
+
+          Write-Host "Deployment Successful!"
